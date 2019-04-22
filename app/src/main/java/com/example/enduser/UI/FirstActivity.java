@@ -116,6 +116,7 @@ public class FirstActivity extends AppCompatActivity implements OnRecyclerItemCl
         shoes = list.get(position);
         Intent intent = new Intent(FirstActivity.this,DisplayActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override
@@ -146,7 +147,7 @@ public class FirstActivity extends AppCompatActivity implements OnRecyclerItemCl
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FirstActivity.this,RegistrationActivity.class);
+                Intent intent = new Intent(FirstActivity.this,DisplayActivity.class);
                 startActivity(intent);
                 finish();
 

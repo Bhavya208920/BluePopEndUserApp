@@ -47,6 +47,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     @BindView(R.id.textViewLogin)
     TextView txtLogin;
 
+    @BindView(R.id.textViewPhoneAuth)
+     TextView txtPhoneAuth;
+
     User user;
 
     FirebaseAuth auth;
@@ -58,6 +61,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         buttonRegister.setOnClickListener(this);
         txtLogin.setOnClickListener(this);
+        txtPhoneAuth.setOnClickListener(this);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Please Wait...");
@@ -94,12 +98,22 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 progressDialog.show();
                 registerUser();
             }else{
+
                 Toast.makeText(this,"Please Connect to Internet and Try Again",Toast.LENGTH_LONG).show();
             }
-        } else {
+
+        }else {
             Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
             startActivity(intent);
+            PhoneAuth();
         }
+
+    }
+
+    void PhoneAuth(){
+        Intent intent = new Intent(RegistrationActivity.this, PhoneAuthActivity.class);
+        startActivity(intent);
+
     }
 
     void registerUser() {
@@ -132,6 +146,11 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                             progressDialog.dismiss();
 
                             Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                        else {
+                            Intent intent = new Intent(RegistrationActivity.this, PhoneAuthActivity.class);
                             startActivity(intent);
                             finish();
                         }

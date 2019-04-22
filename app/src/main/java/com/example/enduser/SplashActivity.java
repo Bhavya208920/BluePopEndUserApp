@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.enduser.UI.FirstActivity;
 import com.example.enduser.UI.LoginActivity;
+import com.example.enduser.UI.RegistrationActivity;
 
 import java.util.Locale;
 
@@ -31,7 +32,7 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             if(msg.what == 101){
-                Intent intent = new Intent(SplashActivity.this, FirstActivity.class);
+                Intent intent = new Intent(SplashActivity.this, RegistrationActivity.class);
                 startActivity(intent);
                 finish();
             }

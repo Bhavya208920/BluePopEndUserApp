@@ -83,7 +83,7 @@ public class PhoneAuthActivity extends AppCompatActivity {
                 if(task.isComplete()) {
                     FirebaseUser user = task.getResult().getUser();
                     String userId = user.getUid();
-                    Intent intent = new Intent(PhoneAuthActivity.this, MainActivity.class);
+                    Intent intent = new Intent(PhoneAuthActivity.this, FirstActivity.class);
                     startActivity(intent);
                     finish();
                 }
