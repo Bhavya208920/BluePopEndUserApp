@@ -38,9 +38,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     @BindView(R.id.editTextPassword)
     EditText editTextPassword;
 
-    @BindView(R.id.editTextAddress)
-    EditText editTextAddress;
-
     @BindView(R.id.buttonRegister)
     Button buttonRegister;
 
@@ -91,8 +88,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             user.email = editTextEmail.getText().toString();
             user.password = editTextPassword.getText().toString();
             user.phone = editTextPhone.getText().toString();
-            user.address = editTextAddress.getText().toString();
-
 
             if(Util.isInternetConnected(this)) {
                 progressDialog.show();
@@ -102,18 +97,29 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 Toast.makeText(this,"Please Connect to Internet and Try Again",Toast.LENGTH_LONG).show();
             }
 
-        }else {
-            Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
-            startActivity(intent);
-            PhoneAuth();
         }
+switch (v.getId()){
+
+          case  R.id.textViewPhoneAuth:
+            PhoneAuth();
+              Toast.makeText(this,"Phone Authentication",Toast.LENGTH_LONG).show();
+              break;
+
+    case  R.id.textViewLogin:
+        Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+        Toast.makeText(this,"Login Here",Toast.LENGTH_LONG).show();
+        break;
+
+}
 
     }
 
     void PhoneAuth(){
         Intent intent = new Intent(RegistrationActivity.this, PhoneAuthActivity.class);
         startActivity(intent);
-
+        finish();
     }
 
     void registerUser() {

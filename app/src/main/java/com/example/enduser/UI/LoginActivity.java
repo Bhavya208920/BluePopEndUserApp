@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,6 +40,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressDialog.setCancelable(false);
 
         auth = FirebaseAuth.getInstance();
+
+        if (auth.getCurrentUser() != null) {
+            startActivity(new Intent(LoginActivity.this, FirstActivity.class));
+
+        }
+
     }
 
     @Override
@@ -51,19 +58,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        String validemail = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}"+
+        String email = eTxtEmail.getText().toString().trim();
+        if(!email.matches("[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}"+
                 "\\@"+
                 "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}"+
                 "("+
                 "\\."+
                 "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}"+
-                ")+";
+                ")+")){
+            eTxtEmail.setError("Invalid Email Address");
 
-        String email = eTxtEmail.getText().toString();
-        Matcher matcher = Pattern.compile(validemail).matcher(email);
-        if(matcher.matches()){
-            Toast.makeText(getApplicationContext(),"Login",Toast.LENGTH_LONG).show();
         }
+        if (eTxtPassword.getText().toString().trim().length() < 6) {
+            eTxtPassword.setError("Minimum 6 Letters!!");
+        }
+
         if (eTxtEmail.getText().toString().trim().length() == 0) {
             eTxtEmail.setError("Email is not entered");
             eTxtEmail.requestFocus();
@@ -71,8 +80,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (eTxtPassword.getText().toString().trim().length() == 0) {
             eTxtPassword.setError("Password is not entered");
             eTxtPassword.requestFocus();
-        } else {
-
+        }
+        else {
             user.email = eTxtEmail.getText().toString();
             user.password = eTxtPassword.getText().toString();
             loginUser();
@@ -86,6 +95,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
                         if (task.isComplete()) {
                             Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_LONG).show();
                             progressDialog.dismiss();
@@ -98,4 +108,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 });
     }
+
+
 }

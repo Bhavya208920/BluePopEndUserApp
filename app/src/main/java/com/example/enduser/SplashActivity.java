@@ -11,20 +11,33 @@ import android.widget.Toast;
 import com.example.enduser.UI.FirstActivity;
 import com.example.enduser.UI.LoginActivity;
 import com.example.enduser.UI.RegistrationActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Locale;
 
 public class SplashActivity extends AppCompatActivity {
     TextToSpeech tts;
 
+    FirebaseAuth auth;
+    FirebaseUser user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         getSupportActionBar().hide();
-        handler.sendEmptyMessageDelayed(101, 4000);
         tts();
 
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+
+        handler.sendEmptyMessageDelayed(101, 4000);
+        if(user==null){
+            handler.sendEmptyMessageDelayed(101, 4000);
+        }else{
+            handler.sendEmptyMessageDelayed(201, 4000);
+        }
     }
 
 
@@ -33,6 +46,11 @@ public class SplashActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             if(msg.what == 101){
                 Intent intent = new Intent(SplashActivity.this, RegistrationActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            else {
+                Intent intent = new Intent(SplashActivity.this, FirstActivity.class);
                 startActivity(intent);
                 finish();
             }

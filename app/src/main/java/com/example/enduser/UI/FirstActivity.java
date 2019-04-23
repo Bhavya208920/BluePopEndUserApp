@@ -1,6 +1,7 @@
 package com.example.enduser.UI;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.example.enduser.Listener.OnRecyclerItemClickListener;
 import com.example.enduser.Model.Shoes;
 import com.example.enduser.Model.Util2;
 import com.example.enduser.R;
+import com.example.enduser.SplashActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,7 +53,6 @@ public class FirstActivity extends AppCompatActivity implements OnRecyclerItemCl
     FirebaseAuth auth;
     FirebaseFirestore db;
     FirebaseUser firebaseUser;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +122,9 @@ public class FirstActivity extends AppCompatActivity implements OnRecyclerItemCl
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
+        menu.add(1,101,0,"LogOut");
+
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main_menu,menu);
         MenuItem item = menu.findItem(R.id.switchBu);
@@ -155,5 +159,18 @@ public class FirstActivity extends AppCompatActivity implements OnRecyclerItemCl
         });
         return true;
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==101){
+            auth.signOut();
+
+            Intent intent = new Intent(FirstActivity.this, SplashActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
